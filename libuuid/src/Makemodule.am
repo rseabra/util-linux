@@ -2,11 +2,11 @@
 noinst_PROGRAMS += test_uuid
 test_uuid_SOURCES = libuuid/src/test_uuid.c
 test_uuid_LDADD = libuuid.la $(SOCKET_LIBS)
-test_uuid_CFLAGS = -Ilibuuid/src/
+test_uuid_CFLAGS = -I$(ul_libuuid_incdir)
 
 # includes
 uuidincdir = $(includedir)/uuid
-uuidinc_HEADERS = uuid.h
+uuidinc_HEADERS = libuuid/src/uuid.h
 
 usrlib_exec_LTLIBRARIES += libuuid.la
 
@@ -35,7 +35,7 @@ libuuid_la_LDFLAGS      = -Wl,--version-script=libuuid/src/uuid.sym \
 EXTRA_DIST += libuuid/src/uuid.sym
 
 # move lib from $(usrlib_execdir) to $(libdir) if needed
-install-exec-hook:
+install-exec-hook-libuuid:
 	if test "$(usrlib_execdir)" != "$(libdir)"; then \
 		mkdir -p $(DESTDIR)$(libdir); \
 		mv $(DESTDIR)$(usrlib_execdir)/libuuid.so.* $(DESTDIR)$(libdir); \
@@ -46,5 +46,8 @@ install-exec-hook:
 			$(LN_S) $$so_img_rel_target$(libdir)/$$so_img_name libuuid.so); \
 	fi
 
-uninstall-hook:
+uninstall-hook-libuuid:
 	rm -f $(DESTDIR)$(libdir)/libuuid.so*
+
+INSTALL_EXEC_HOOKS += install-exec-hook-libuuid
+UNINSTALL_HOOKS += uninstall-hook-libuuid
