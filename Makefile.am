@@ -5,6 +5,7 @@ pkgconfigdir = $(usrlib_execdir)/pkgconfig
 dist_noinst_HEADERS =
 noinst_PROGRAMS =
 usrbin_exec_PROGRAMS =
+usrsbin_exec_PROGRAMS =
 dist_man_MANS =
 man_MANS =
 pkgconfig_DATA =
@@ -48,10 +49,6 @@ if BUILD_HWCLOCK
 SUBDIRS += hwclock
 endif
 
-if BUILD_PARTX
-SUBDIRS += partx
-endif
-
 if BUILD_MOUNT
 SUBDIRS += mount
 endif
@@ -72,6 +69,7 @@ include include/Makemodule.am
 include lib/Makemodule.am
 include schedutils/Makemodule.am
 include libuuid/Makemodule.am
+include partx/Makemodule.am
 
 
 # Arrange so that .tarball-version appears only in the distribution

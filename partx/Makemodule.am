@@ -1,0 +1,34 @@
+if BUILD_PARTX
+
+usrsbin_exec_PROGRAMS += partx addpart delpart
+dist_man_MANS += \
+	partx/addpart.8 \
+	partx/delpart.8 \
+	partx/partx.8
+
+
+addpart_SOURCES = \
+	partx/addpart.c \
+	lib/strutils.c
+
+delpart_SOURCES = \
+	partx/delpart.c \
+	lib/strutils.c
+
+partx_SOURCES = \
+	partx/partx.c \
+	partx/partx.h \
+	lib/at.c \
+	lib/blkdev.c \
+	lib/canonicalize.c \
+	lib/linux_version.c \
+	lib/loopdev.c \
+	lib/mbsalign.c \
+	lib/strutils.c \
+	lib/sysfs.c \
+	lib/tt.c
+
+partx_CFLAGS = -I$(ul_libblkid_incdir)
+partx_LDADD = $(ul_libblkid_la)
+
+endif # BUILD_PARTX

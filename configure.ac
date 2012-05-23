@@ -1301,7 +1301,6 @@ man/ru/Makefile
 misc-utils/Makefile
 misc-utils/uuidd.service
 mount/Makefile
-partx/Makefile
 po/Makefile.in
 sys-utils/Makefile
 term-utils/Makefile
