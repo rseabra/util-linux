@@ -4,6 +4,7 @@ pkgconfigdir = $(usrlib_execdir)/pkgconfig
 
 dist_noinst_HEADERS =
 noinst_PROGRAMS =
+noinst_LTLIBRARIES =
 usrbin_exec_PROGRAMS =
 usrsbin_exec_PROGRAMS =
 dist_man_MANS =
@@ -11,15 +12,15 @@ man_MANS =
 pkgconfig_DATA =
 usrlib_exec_LTLIBRARIES =
 
+INSTALL_EXEC_HOOKS =
+UNINSTALL_HOOKS =
+INSTALL_DATA_HOOKS =
+
 EXTRA_DIST =
 CLEANFILES =
 
 
 SHLIBS_DIRS =
-
-if BUILD_LIBBLKID
-SHLIBS_DIRS += libblkid
-endif
 
 if BUILD_LIBMOUNT
 SHLIBS_DIRS += libmount
@@ -69,6 +70,7 @@ include include/Makemodule.am
 include lib/Makemodule.am
 include schedutils/Makemodule.am
 include libuuid/Makemodule.am
+include libblkid/Makemodule.am
 include partx/Makemodule.am
 
 
@@ -121,4 +123,9 @@ $(CHANGELOG_FILE):
 
 changelog: $(CHANGELOG_FILE)
 
+install-exec-hook: $(INSTALL_EXEC_HOOKS)
+
+uninstall-hook: $(UNINSTALL_HOOKS)
+
+install-data-hook: $(INSTALL_DATA_HOOKS)
 
