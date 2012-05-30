@@ -1,0 +1,10 @@
+if BUILD_LIBMOUNT
+
+include libmount/src/Makemodule.am
+
+#include libmount/docs/Makemodule.am
+
+pkgconfig_DATA += mount.pc
+EXTRA_DIST     += mount.pc.in
+
+endif # BUILD_LIBMOUNT
