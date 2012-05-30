@@ -1299,7 +1299,6 @@ term-utils/Makefile
 tests/Makefile
 tests/commands.sh
 tests/helpers/Makefile
-text-utils/Makefile
 ])
 
 

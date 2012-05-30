@@ -11,6 +11,7 @@ dist_man_MANS =
 man_MANS =
 pkgconfig_DATA =
 usrlib_exec_LTLIBRARIES =
+bin_PROGRAMS =
 
 INSTALL_EXEC_HOOKS =
 UNINSTALL_HOOKS =
@@ -31,9 +32,7 @@ SUBDIRS = \
 	po \
 	sys-utils \
 	term-utils \
-	tests \
-	text-utils
-
+	tests
 
 RCS_FIND_IGNORE = \( -name SCCS -o -name BitKeeper -o -name .svn -o \
 		-name CVS -o -name .pc -o -name .hg -o -name .git \) -prune -o
@@ -66,6 +65,7 @@ include libmount/Makemodule.am
 
 include schedutils/Makemodule.am
 include partx/Makemodule.am
+include text-utils/Makemodule.am
 
 
 # Arrange so that .tarball-version appears only in the distribution
