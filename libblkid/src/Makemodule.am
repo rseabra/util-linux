@@ -144,7 +144,7 @@ noinst_PROGRAMS += \
 	test_blkid_dev \
 	test_blkid_devname \
 	test_blkid_devno \
-	test_blkid_evaluate
+	test_blkid_evaluate \
 	test_blkid_read \
 	test_blkid_resolve \
 	test_blkid_save \
