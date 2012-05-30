@@ -1295,7 +1295,6 @@ misc-utils/uuidd.service
 mount/Makefile
 po/Makefile.in
 sys-utils/Makefile
-term-utils/Makefile
 tests/Makefile
 tests/commands.sh
 tests/helpers/Makefile
