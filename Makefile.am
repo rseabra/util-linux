@@ -29,7 +29,6 @@ SUBDIRS = \
 	disk-utils \
 	fdisk \
 	getopt \
-	login-utils \
 	misc-utils \
 	po \
 	sys-utils \
@@ -68,6 +67,7 @@ include schedutils/Makemodule.am
 include partx/Makemodule.am
 include text-utils/Makemodule.am
 include term-utils/Makemodule.am
+include login-utils/Makemodule.am
 
 
 # Arrange so that .tarball-version appears only in the distribution

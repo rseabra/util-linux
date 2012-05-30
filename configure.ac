@@ -1288,7 +1288,6 @@ libmount/docs/version.xml
 libmount/mount.pc
 libmount/src/libmount.h
 libuuid/uuid.pc
-login-utils/Makefile
 man/ru/Makefile
 misc-utils/Makefile
 misc-utils/uuidd.service
