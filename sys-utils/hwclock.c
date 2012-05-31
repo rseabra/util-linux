@@ -71,11 +71,12 @@
 #include <unistd.h>
 
 #include "c.h"
-#include "clock.h"
 #include "closestream.h"
 #include "nls.h"
 #include "pathnames.h"
 #include "strutils.h"
+
+#include "hwclock.h"
 
 #ifdef HAVE_LIBAUDIT
 #include <libaudit.h>

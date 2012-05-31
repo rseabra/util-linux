@@ -36,10 +36,6 @@ SUBDIRS = \
 RCS_FIND_IGNORE = \( -name SCCS -o -name BitKeeper -o -name .svn -o \
 		-name CVS -o -name .pc -o -name .hg -o -name .git \) -prune -o
 
-if BUILD_HWCLOCK
-SUBDIRS += hwclock
-endif
-
 AUTOMAKE_OPTIONS = gnu
 ACLOCAL_AMFLAGS = -I m4
 

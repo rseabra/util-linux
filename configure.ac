@@ -1263,7 +1263,6 @@ Makefile
 disk-utils/Makefile
 fdisk/Makefile
 getopt/Makefile
-hwclock/Makefile
 libblkid/blkid.pc
 libblkid/docs/Makefile
 libblkid/docs/version.xml
