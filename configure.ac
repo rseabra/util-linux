@@ -1277,7 +1277,6 @@ man/ru/Makefile
 misc-utils/Makefile
 misc-utils/uuidd.service
 po/Makefile.in
-sys-utils/Makefile
 tests/Makefile
 tests/commands.sh
 tests/helpers/Makefile

@@ -31,7 +31,6 @@ SUBDIRS = \
 	getopt \
 	misc-utils \
 	po \
-	sys-utils \
 	tests
 
 RCS_FIND_IGNORE = \( -name SCCS -o -name BitKeeper -o -name .svn -o \
@@ -64,6 +63,7 @@ include text-utils/Makemodule.am
 include term-utils/Makemodule.am
 include login-utils/Makemodule.am
 include mount-deprecated/Makemodule.am
+include sys-utils/Makemodule.am
 
 
 # Arrange so that .tarball-version appears only in the distribution
