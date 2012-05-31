@@ -1262,7 +1262,6 @@ AC_CONFIG_FILES([
 Makefile
 disk-utils/Makefile
 fdisk/Makefile
-getopt/Makefile
 libblkid/blkid.pc
 libblkid/docs/Makefile
 libblkid/docs/version.xml
