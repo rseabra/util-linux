@@ -56,6 +56,8 @@ if BUILD_DDATE
 usrbin_exec_PROGRAMS += ddate
 dist_man_MANS += misc-utils/ddate.1
 ddate_SOURCES = misc-utils/ddate.c
+ruman1_DATA += man/ru/ddate.1
+EXTRA_DIST += $(ruman1_DATA)
 endif
 
 if BUILD_LSLOCKS
@@ -93,14 +95,14 @@ usrbin_exec_PROGRAMS += uuidgen
 dist_man_MANS += misc-utils/uuidgen.1
 uuidgen_SOURCES = misc-utils/uuidgen.c
 uuidgen_LDADD = libuuid.la
-uuidgen_CFLAGS = $(AM_CFLAGS) -I$(ul_libuuid_srcdir)
+uuidgen_CFLAGS = $(AM_CFLAGS) -I$(ul_libuuid_incdir)
 endif
 
 if BUILD_UUIDD
 usrsbin_exec_PROGRAMS += uuidd
 dist_man_MANS += misc-utils/uuidd.8
 uuidd_LDADD = libuuid.la
-uuidd_CFLAGS = $(AM_CFLAGS) -I$(ul_libuuid_srcdir)
+uuidd_CFLAGS = $(AM_CFLAGS) -I$(ul_libuuid_incdir)
 uuidd_SOURCES = misc-utils/uuidd.c
 if USE_SOCKET_ACTIVATION
 uuidd_SOURCES += misc-utils/sd-daemon.c
