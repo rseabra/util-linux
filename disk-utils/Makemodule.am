@@ -47,7 +47,7 @@ mkswap_SOURCES = \
 mkswap_CFLAGS = $(AM_CFLAGS)
 mkswap_LDADD =
 if BUILD_LIBUUID
-mkswap_CFLAGS += -I$(ul_libuuid_srcdir)
+mkswap_CFLAGS += -I$(ul_libuuid_incdir)
 mkswap_LDADD += libuuid.la 
 endif
 if BUILD_LIBBLKID
@@ -69,7 +69,7 @@ swaplabel_LDADD = libblkid.la
 
 if BUILD_LIBUUID
 swaplabel_LDADD += $(uuid_ldadd)
-swaplabel_CFLAGS += -I$(ul_libuuid_srcdir)
+swaplabel_CFLAGS += -I$(ul_libuuid_incdir)
 endif
 endif #BUILD_SWAPLABEL
 
