@@ -52,7 +52,6 @@ include libblkid/Makemodule.am
 include libmount/Makemodule.am
 
 include schedutils/Makemodule.am
-include partx/Makemodule.am
 include text-utils/Makemodule.am
 include term-utils/Makemodule.am
 include login-utils/Makemodule.am
