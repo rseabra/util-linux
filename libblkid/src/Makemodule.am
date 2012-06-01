@@ -121,7 +121,7 @@ endif
 
 libblkid_la_CFLAGS = \
 	-I$(ul_libblkid_incdir) \
-	-I$(ul_libuuid_srcdir) \
+	-I$(ul_libuuid_incdir) \
 	-Ilibblkid/src
 
 libblkid_la_DEPENDENCIES = \
