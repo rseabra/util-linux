@@ -27,7 +27,7 @@ taskset_SOURCES = \
 	lib/cpuset.c \
 	$(sched_common)
 
-dist_man_MANS += taskset.1
+dist_man_MANS += schedutils/taskset.1
 endif
 
 endif # BUILD_SCHEDUTILS
