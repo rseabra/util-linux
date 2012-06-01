@@ -50,7 +50,7 @@ if LINUX
 test_cpuset_SOURCES = lib/cpuset.c
 test_cpuset_CFLAGS = -DTEST_PROGRAM
 
-test_sysfs_SOURCES = lib/sysfs.c at.c
+test_sysfs_SOURCES = lib/sysfs.c lib/at.c
 test_sysfs_CFLAGS = -DTEST_PROGRAM_SYSFS
 
 test_pager_SOURCES = lib/pager.c
