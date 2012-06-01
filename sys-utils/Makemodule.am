@@ -186,7 +186,10 @@ if BUILD_MOUNT
 # -- temporary we share some man pages
 #
 bin_PROGRAMS += mount umount
-dist_man_MANS += mount.8 deprecated-mount/umount.8 fstab.5
+dist_man_MANS += \
+	sys-utils/mount.8 \
+	sys-utils/fstab.5 \
+	mount-deprecated/umount.8
 mount_SOURCES = \
 	sys-utils/mount.c \
 	lib/env.c \
