@@ -114,7 +114,7 @@ endif
 libblkid_la_CFLAGS = \
 	-I$(ul_libblkid_incdir) \
 	-I$(ul_libuuid_incdir) \
-	-Ilibblkid/src
+	-I$(top_srcdir)/libblkid/src
 
 libblkid_la_DEPENDENCIES = \
 	$(libblkid_la_LIBADD) \
@@ -122,7 +122,7 @@ libblkid_la_DEPENDENCIES = \
 	libblkid/src/blkid.h.in
 
 libblkid_la_LDFLAGS = \
-	-Wl,--version-script=libblkid/src/blkid.sym \
+	-Wl,--version-script=$(top_srcdir)/libblkid/src/blkid.sym \
 	-version-info $(LIBBLKID_VERSION_INFO)
 
 EXTRA_DIST += \
