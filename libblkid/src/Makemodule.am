@@ -127,7 +127,6 @@ libblkid_la_LDFLAGS = \
 
 EXTRA_DIST += \
 	libblkid/src/blkid.sym \
-	libblkid/src/test_types.c \
 	libblkid/src/blkid.h.in
 
 noinst_PROGRAMS += \
