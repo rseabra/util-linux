@@ -1,7 +1,7 @@
 
 AM_CPPFLAGS = \
 	-include config.h \
-	-Iinclude \
+	-I$(top_srcdir)/include \
 	-DLOCALEDIR=\"$(localedir)\"
 AM_CFLAGS = -fsigned-char
 AM_LDFLAGS =
