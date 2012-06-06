@@ -49,7 +49,6 @@ SUBDIRS = po
 RCS_FIND_IGNORE = \( -name SCCS -o -name BitKeeper -o -name .svn -o \
 		-name CVS -o -name .pc -o -name .hg -o -name .git \) -prune -o
 
-AUTOMAKE_OPTIONS = gnu
 ACLOCAL_AMFLAGS = -I m4
 
 EXTRA_DIST += \

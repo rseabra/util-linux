@@ -77,47 +77,34 @@ usrbin_exec_PROGRAMS += setarch
 dist_man_MANS += sys-utils/setarch.8
 setarch_SOURCES = sys-utils/setarch.c
 
-SETARCH_LINKS = sys-utils/linux32 sys-utils/linux64
+SETARCH_LINKS = linux32 linux64
 
 if ARCH_S390
-SETARCH_LINKS += sys-utils/s390 sys-utils/s390x
+SETARCH_LINKS += s390 s390x
 endif
 if ARCH_I86
-SETARCH_LINKS += sys-utils/i386
+SETARCH_LINKS += i386
 endif
 if ARCH_86_64
-SETARCH_LINKS += sys-utils/i386 sys-utils/x86_64
+SETARCH_LINKS += i386 x86_64
 endif
 if ARCH_PPC
-SETARCH_LINKS += \
-	sys-utils/ppc \
-	sys-utils/ppc64 \
-	sys-utils/ppc32
+SETARCH_LINKS += ppc ppc64 ppc32
 endif
 if ARCH_SPARC
-SETARCH_LINKS += \
-	sys-utils/sparc \
-	sys-utils/sparc64 \
-	sys-utils/sparc32 \
-	sys-utils/sparc32bash
+SETARCH_LINKS += sparc sparc64 sparc32 sparc32bash
 endif
 if ARCH_MIPS
-SETARCH_LINKS += \
-	sys-utils/mips \
-	sys-utils/mips64 \
-	sys-utils/mips32
+SETARCH_LINKS += mips mips64 mips32
 endif
 if ARCH_IA64
-SETARCH_LINKS += sys-utils/i386 sys-utils/ia64
+SETARCH_LINKS += i386 ia64
 endif
 if ARCH_HPPA
-SETARCH_LINKS += \
-	sys-utils/parisc \
-	sys-utils/parisc64 \
-	sys-utils/parisc32
+SETARCH_LINKS += parisc parisc64 parisc32
 endif
 
-SETARCH_MAN_LINKS = $(SETARCH_LINKS:=.8)
+SETARCH_MAN_LINKS = $(addprefix sys-utils/,$(SETARCH_LINKS:=.8))
 man_MANS += $(SETARCH_MAN_LINKS)
 
 $(SETARCH_MAN_LINKS):
