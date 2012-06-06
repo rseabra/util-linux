@@ -106,6 +106,7 @@ endif
 
 SETARCH_MAN_LINKS = $(addprefix sys-utils/,$(SETARCH_LINKS:=.8))
 man_MANS += $(SETARCH_MAN_LINKS)
+CLEANFILES += $(SETARCH_MAN_LINKS)
 
 $(SETARCH_MAN_LINKS):
 	$(AM_V_GEN)echo ".so man8/setarch.8" > $@
