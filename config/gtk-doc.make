@@ -70,6 +70,8 @@ endif
 
 docs: html-build.stamp
 
+$(REPORT_FILES): sgml-build.stamp
+
 #### setup ####
 
 setup-build.stamp:
@@ -116,7 +118,7 @@ scan-build.stamp: $(HFILE_GLOB) $(CFILE_GLOB) $(srcdir)/$(DOC_MODULE)-*.txt $(co
 	fi
 	@ touch scan-build.stamp
 
-$(SCANOBJ_FILES): scan-build.stamp
+$(DOC_MODULE)-decl.txt $(SCANOBJ_FILES) $(DOC_MODULE)-sections.txt $(DOC_MODULE)-overrides.txt: scan-build.stamp
 	@true
 
 #### templates ####
@@ -136,7 +138,6 @@ $(SCANOBJ_FILES): scan-build.stamp
 #
 
 #### xml ####
-
 
 sgml-build.stamp: setup.stamp $(HFILE_GLOB) $(CFILE_GLOB) $(DOC_MODULE)-decl.txt  $(DOC_MODULE)-sections.txt $(expand_content_files)
 	$(AM_V_GEN)gtkdoc-mkdb --module=$(DOC_MODULE) \
