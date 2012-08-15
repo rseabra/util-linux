@@ -14,7 +14,6 @@ mysyslog(int fd, int logflags, int pri, char *tag, char *msg);
 	- char buf[1000] passa a *buf, com tamanho bufsize.
 	- Só estava a permitir mensagens syslog com 400 caracteres (%.400s). Alterei para %s. Dado que se usa snprintf nao devera existir BO
 
-
 **PEQUENO GLITCH**
 
 apesar de se poder definir o tamanho do buffer ate 65535, é necessário descontar o tamanho do pacote IP + UDP (28 bytes), pelo que no máximo uma mensagem syslog neste nosso logger só podera ter até 65507 caracteres (65535-28). Podemos definir um tamanho limite para b ligeiramente menos (64000), ou então deixamos como está
