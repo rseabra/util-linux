@@ -60,6 +60,7 @@
 
 static int optd = 0;
 static uint16_t udpport = 514;
+static uint16_t bufsize = 1024;
 
 static int decode(char *name, CODE *codetab)
 {
@@ -141,7 +142,7 @@ udpopenlog(const char *servername, uint16_t port) {
 }
 static void
 mysyslog(int fd, int logflags, int pri, char *tag, char *msg) {
-       char buf[1000], pid[30], *cp, *tp;
+       char *buf = NULL, pid[30], *cp, *tp;
        time_t now;
 
        if (fd > -1) {
@@ -159,11 +160,16 @@ mysyslog(int fd, int logflags, int pri, char *tag, char *msg) {
                (void)time(&now);
 	       tp = ctime(&now)+4;
 
-               snprintf(buf, sizeof(buf), "<%d>%.15s %.200s%s: %.400s",
+		if ((buf = (char *) malloc (bufsize)) == NULL)
+			return;
+
+               snprintf(buf, bufsize, "<%d>%.15s %.200s%s: %s",
 			pri, tp, cp, pid, msg);
 
                if (write(fd, buf, strlen(buf)+1) < 0)
                        return; /* error */
+
+		free(buf);
        }
 }
 
@@ -174,7 +180,8 @@ static void __attribute__ ((__noreturn__)) usage(FILE *out)
 	      _(" %s [options] [message]\n"), program_invocation_short_name);
 
 	fputs(_("\nOptions:\n"), out);
-	fputs(_(" -d, --udp             use UDP (TCP is default)\n"
+	fputs(_(" -b, --bufsize <size>  maximum buffer size (1024 is default and minimum. 65535 is maximum)\n"	
+		" -d, --udp             use UDP (TCP is default)\n"
 		" -i, --id              log the process ID too\n"
 		" -f, --file <file>     log the contents of this file\n"
 		" -h, --help            display this help text and exit\n"), out);
@@ -198,12 +205,13 @@ static void __attribute__ ((__noreturn__)) usage(FILE *out)
 int
 main(int argc, char **argv) {
 	int ch, logflags, pri;
-	char *tag, buf[1024];
+	char *tag, *buf = NULL;
 	char *usock = NULL;
 	char *udpserver = NULL;
 	int LogSock = -1;
 
 	static const struct option longopts[] = {
+		{ "bufsize",	required_argument,  0, 'b' },
 		{ "id",		no_argument,	    0, 'i' },
 		{ "stderr",	no_argument,	    0, 's' },
 		{ "file",	required_argument,  0, 'f' },
@@ -226,7 +234,7 @@ main(int argc, char **argv) {
 	tag = NULL;
 	pri = LOG_NOTICE;
 	logflags = 0;
-	while ((ch = getopt_long(argc, argv, "f:ip:st:u:dn:P:Vh",
+	while ((ch = getopt_long(argc, argv, "f:ip:st:u:dn:P:b:Vh",
 					    longopts, NULL)) != -1) {
 		switch((char)ch) {
 		case 'f':		/* file to log */
@@ -260,6 +268,10 @@ main(int argc, char **argv) {
 			udpport = strtou16_or_err(optarg,
 						_("invalid port number argument"));
 			break;
+		case 'b':
+			bufsize = strtou16_or_err(optarg,
+						_("invalid buffer size argument"));
+			break;
 		case 'V':
 			printf(_("%s from %s\n"), program_invocation_short_name,
 						  PACKAGE_STRING);
@@ -282,24 +294,34 @@ main(int argc, char **argv) {
 	else
 		LogSock = myopenlog(usock);
 
+
+	bufsize = bufsize < 1024 ? 1024 : bufsize;
+	if ((buf = (char *) malloc (bufsize)) == NULL)
+		return EXIT_FAILURE;
+	else
+		bzero(buf, bufsize);
+
+
 	/* log input line if appropriate */
 	if (argc > 0) {
 		register char *p, *endp;
 		size_t len;
 
-		for (p = buf, endp = buf + sizeof(buf) - 2; *argv;) {
+		for(p = buf, endp = buf + bufsize - 2; *argv;) {
 			len = strlen(*argv);
 			if (p + len > endp && p > buf) {
-			    if (!usock && !udpserver)
+			    if (!usock && !udpserver){
 				syslog(pri, "%s", buf);
-			    else
+				bzero(buf, bufsize);
+			    } else
 				mysyslog(LogSock, logflags, pri, tag, buf);
 				p = buf;
 			}
-			if (len > sizeof(buf) - 1) {
-			    if (!usock && !udpserver)
+			if (len > bufsize - (unsigned int)1) {
+			    if (!usock && !udpserver){
 				syslog(pri, "%s", *argv++);
-			    else
+				bzero(buf, bufsize);
+			    } else
 				mysyslog(LogSock, logflags, pri, tag, *argv++);
 			} else {
 				if (p != buf)
@@ -309,25 +331,32 @@ main(int argc, char **argv) {
 			}
 		}
 		if (p != buf) {
-		    if (!usock && !udpserver)
+		    if (!usock && !udpserver){
 			syslog(pri, "%s", buf);
-		    else
+			bzero(buf, bufsize);
+		    } else
 			mysyslog(LogSock, logflags, pri, tag, buf);
 		}
+		free(buf);	
 	} else {
-		while (fgets(buf, sizeof(buf), stdin) != NULL) {
-		    /* glibc is buggy and adds an additional newline,
-		       so we have to remove it here until glibc is fixed */
-		    int len = strlen(buf);
+		while (fgets(buf, bufsize, stdin) != NULL) {
+			/* glibc is buggy and adds an additional newline,
+			so we have to remove it here until glibc is fixed */
+			int len = strlen(buf);
 
-		    if (len > 0 && buf[len - 1] == '\n')
-			    buf[len - 1] = '\0';
+			if (len > 0 && buf[len - 1] == '\n')
+				buf[len - 1] = '\0';
 
-		    if (!usock && !udpserver)
-			syslog(pri, "%s", buf);
-		    else
-			mysyslog(LogSock, logflags, pri, tag, buf);
+			if (!usock && !udpserver){
+				if (strlen(buf) > 0)
+					syslog(pri, "%s", buf);
+			} else {
+				if (strlen(buf) > 0)
+					mysyslog(LogSock, logflags, pri, tag, buf);
+			}
+			bzero(buf, bufsize);
 		}
+		free(buf);
 	}
 	if (!usock && !udpserver)
 		closelog();

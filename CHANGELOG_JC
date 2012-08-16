@@ -1,0 +1,22 @@
+common:
+	- Adicionado uint16_t bufsize = 1024. Penso que não há necessidade de ter um tamanho de 32bit e acho que nem o rsyslog suporta mais que 64K. Se quiseres trocar, go for it!
+
+
+usage(FILE *out);
+	- Nova opcao (-b)
+
+main(int argc, char **argv);
+	- Adicionado "bufsize" ao array de longopts
+	- utilizacao da variavel bufsize (sempre 1024, minimo. Se arg for < 1024, bufsize sera hardcoded para 1024. Se achares desnecessario, retira esta condicao)
+	- buf[1024] passa a *buf=NULL
+
+mysyslog(int fd, int logflags, int pri, char *tag, char *msg);
+	- char buf[1000] passa a *buf, com tamanho bufsize.
+	- Só estava a permitir mensagens syslog com 400 caracteres (%.400s). Alterei para %s. Dado que se usa snprintf nao devera existir BO
+
+
+**PEQUENO GLITCH**
+
+apesar de se poder definir o tamanho do buffer ate 65535, é necessário descontar o tamanho do pacote IP + UDP (28 bytes), pelo que no máximo uma mensagem syslog neste nosso logger só podera ter até 65507 caracteres (65535-28). Podemos definir um tamanho limite para b ligeiramente menos (64000), ou então deixamos como está
+
+(Já agora, confirma se o meu entendimento faz sentido).
